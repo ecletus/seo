@@ -27,7 +27,7 @@ func (sc seoController) Index(context *admin.Context) {
 
 func (sc seoController) InlineEdit(context *admin.Context) {
 	settingContext := context.NewResourceContext(sc.Collection.SettingResource)
-	result := sc.Collection.SettingResource.NewStruct()
+	result := sc.Collection.SettingResource.NewStruct(context.Site)
 	name, err := url.QueryUnescape(context.Request.Form.Get("name"))
 	if err != nil {
 		settingContext.AddError(err)
@@ -56,7 +56,7 @@ func (sc seoController) InlineEdit(context *admin.Context) {
 func (sc seoController) Update(context *admin.Context) {
 	settingResource := sc.Collection.SettingResource
 	settingContext := context.NewResourceContext(settingResource)
-	result := settingResource.NewStruct()
+	result := settingResource.NewStruct(context.Site)
 
 	name, err := url.QueryUnescape(context.Request.Form.Get("name"))
 	if err != nil {

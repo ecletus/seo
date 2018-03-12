@@ -70,7 +70,7 @@ func TestSaveSEOSetting(t *testing.T) {
 		SiteName string
 	}
 
-	Admin := admin.New(&qor.Config{DB: db})
+	Admin := admin.New(&qor.NewConfig(db))
 	seoCollection := New("Common SEO")
 	seoCollection.RegisterGlobalVaribles(&SEOGlobalSetting{SiteName: "Qor Shop"})
 	seoCollection.SettingResource = Admin.NewResource(&QorSEOSetting{}, &admin.Config{Invisible: true})
@@ -322,7 +322,7 @@ func setupSeoCollection() {
 			return context
 		},
 	})
-	Admin = admin.New(&qor.Config{DB: db})
+	Admin = admin.New(&qor.NewConfig(db))
 	Admin.AddResource(collection, &admin.Config{Name: "SEO Setting", Menu: []string{"Site Management"}, Singleton: true})
 	Admin.MountTo("/admin", http.NewServeMux())
 }

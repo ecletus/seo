@@ -2,7 +2,6 @@ package seo
 
 import (
 	"fmt"
-	"html/template"
 	"net/url"
 	"reflect"
 	"regexp"
@@ -11,10 +10,13 @@ import (
 	"github.com/qor/admin"
 	"github.com/qor/qor"
 	"github.com/qor/qor/resource"
+	"github.com/moisespsena/template/html/template"
 )
 
 func init() {
-	admin.RegisterViewPath("github.com/qor/seo/views")
+	qor.IfDev(func() {
+		admin.RegisterViewPath("github.com/qor/seo/views")
+	})
 }
 
 // New initialize a SeoCollection instance
@@ -78,7 +80,7 @@ func (collection Collection) Render(context *qor.Context, name string, objects .
 		description = seoField.Description
 		keywords = seoField.Keywords
 	} else {
-		seoSetting := collection.SettingResource.NewStruct().(QorSEOSettingInterface)
+		seoSetting := collection.SettingResource.NewStruct(context.Site).(QorSEOSettingInterface)
 		if !db.Where("name = ?", name).First(seoSetting).RecordNotFound() {
 			title = seoSetting.GetTitle()
 			description = seoSetting.GetDescription()
@@ -86,7 +88,7 @@ func (collection Collection) Render(context *qor.Context, name string, objects .
 		}
 	}
 
-	siteWideSetting := collection.SettingResource.NewStruct()
+	siteWideSetting := collection.SettingResource.NewStruct(context.Site)
 	db.Where("is_global_seo = ? AND name = ?", true, collection.Name).First(siteWideSetting)
 	tagValues := siteWideSetting.(QorSEOSettingInterface).GetGlobalSetting()
 
