@@ -6,8 +6,8 @@ import (
 	"path"
 	"strings"
 
-	"github.com/qor/admin"
-	"github.com/qor/responder"
+	"github.com/aghape/admin"
+	"github.com/aghape/responder"
 )
 
 type seoController struct {
@@ -49,7 +49,7 @@ func (sc seoController) InlineEdit(context *admin.Context) {
 			Metas:   seoSettingMetas(sc.Collection),
 		})
 	}).With("json", func() {
-		settingContext.JSON("edit", result)
+		settingContext.JSON(result, "edit")
 	}).Respond(context.Request)
 }
 
@@ -83,18 +83,18 @@ func (sc seoController) Update(context *admin.Context) {
 	res := settingContext.Resource
 	if !settingContext.HasError() {
 		if settingContext.AddError(res.Decode(settingContext.Context, result)); !settingContext.HasError() {
-			settingContext.AddError(res.CallSave(result, settingContext.Context))
+			settingContext.AddError(res.Save(result, settingContext.Context))
 		}
 	}
 
 	responder.With("html", func() {
-		http.Redirect(context.Writer, context.Request, path.Join(settingResource.GetAdmin().GetRouter().Prefix, context.Resource.ToParam()), http.StatusFound)
+		http.Redirect(context.Writer, context.Request, path.Join(settingResource.GetAdmin().Router.Prefix(), context.Resource.ToParam()), http.StatusFound)
 	}).With("json", func() {
 		if settingContext.HasError() {
 			context.Writer.WriteHeader(admin.HTTPUnprocessableEntity)
-			settingContext.JSON("edit", map[string]interface{}{"errors": settingContext.GetErrors()})
+			settingContext.JSON(map[string]interface{}{"errors": settingContext.GetErrors()}, "edit")
 		} else {
-			settingContext.JSON("show", result)
+			settingContext.JSON(result, "show")
 		}
 	}).Respond(context.Request)
 }

@@ -7,17 +7,11 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/qor/admin"
-	"github.com/qor/qor"
-	"github.com/qor/qor/resource"
+	"github.com/aghape/admin"
+	"github.com/aghape/aghape"
+	"github.com/aghape/aghape/resource"
 	"github.com/moisespsena/template/html/template"
 )
-
-func init() {
-	qor.IfDev(func() {
-		admin.RegisterViewPath("github.com/qor/seo/views")
-	})
-}
 
 // New initialize a SeoCollection instance
 func New(name string) *Collection {
@@ -122,7 +116,7 @@ func (collection *Collection) GetSEO(name string) *SEO {
 // SEOSettingURL get setting inline edit url by name
 func (collection *Collection) SEOSettingURL(name string) string {
 	qorAdmin := collection.resource.GetAdmin()
-	return fmt.Sprintf("%v/%v/!seo_setting?name=%v", qorAdmin.GetRouter().Prefix, collection.resource.ToParam(), url.QueryEscape(name))
+	return fmt.Sprintf("%v/%v/!seo_setting?name=%v", qorAdmin.Router.Prefix(), collection.resource.ToParam(), url.QueryEscape(name))
 }
 
 // ConfigureQorResource configure seoCollection for qor admin
@@ -146,11 +140,10 @@ func (collection *Collection) ConfigureQorResource(res resource.Resourcer) {
 		res.Config.Singleton = true
 		res.UseTheme("seo")
 
-		router := Admin.GetRouter()
 		controller := seoController{Collection: collection}
-		router.Get(res.ToParam(), controller.Index)
-		router.Put(fmt.Sprintf("%v/!seo_setting", res.ToParam()), controller.Update)
-		router.Get(fmt.Sprintf("%v/!seo_setting", res.ToParam()), controller.InlineEdit)
+		res.Router.Get("/", controller.Index)
+		res.Router.Put("/!seo_setting", controller.Update)
+		res.Router.Get("/!seo_setting", controller.InlineEdit)
 
 		registerFuncMap(Admin)
 	}
