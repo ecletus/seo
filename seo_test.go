@@ -11,13 +11,13 @@ import (
 	"testing"
 
 	"github.com/fatih/color"
-	"github.com/jinzhu/gorm"
+	"github.com/moisespsena-go/aorm"
 	"github.com/aghape/admin"
 	"github.com/aghape/aghape"
 	"github.com/aghape/aghape/test/utils"
 )
 
-var db *gorm.DB
+var db *aorm.DB
 var Admin *admin.Admin
 var collection *Collection
 
