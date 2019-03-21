@@ -1,7 +1,7 @@
 package seo
 
 import (
-	"github.com/aghape/plug"
+	"github.com/ecletus/plug"
 )
 
 var E_SEO_COLLECTION = PREFIX + ".collection"

@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/aghape/admin"
-	"github.com/aghape/aghape/resource"
+	"github.com/ecletus/admin"
+	"github.com/ecletus/ecletus/resource"
 )
 
 // QorSEOSettingInterface support customize Seo model

@@ -7,9 +7,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/aghape/admin"
-	"github.com/aghape/aghape"
-	"github.com/aghape/aghape/resource"
+	"github.com/ecletus/admin"
+	"github.com/ecletus/ecletus"
+	"github.com/ecletus/ecletus/resource"
 	"github.com/moisespsena/template/html/template"
 )
 

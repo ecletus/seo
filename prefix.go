@@ -1,6 +1,6 @@
 package seo
 
-import "github.com/aghape/helpers"
+import "github.com/ecletus/helpers"
 
 var PREFIX string
 

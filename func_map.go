@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"text/template"
 
-	"github.com/aghape/admin"
+	"github.com/ecletus/admin"
 )
 
 func seoSections(context *admin.Context, collection *Collection) []interface{} {

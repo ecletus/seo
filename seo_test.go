@@ -12,9 +12,9 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/moisespsena-go/aorm"
-	"github.com/aghape/admin"
-	"github.com/aghape/aghape"
-	"github.com/aghape/aghape/test/utils"
+	"github.com/ecletus/admin"
+	"github.com/ecletus/ecletus"
+	"github.com/ecletus/ecletus/test/utils"
 )
 
 var db *aorm.DB
