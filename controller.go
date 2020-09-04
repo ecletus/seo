@@ -32,7 +32,7 @@ func (sc seoController) InlineEdit(context *admin.Context) {
 	if err != nil {
 		settingContext.AddError(err)
 	}
-	context.DB.Where("name = ?", name).First(result)
+	context.db.Where("name = ?", name).First(result)
 
 	if seoSetting, ok := result.(QorSEOSettingInterface); ok {
 		seoSetting.SetCollection(sc.Collection)
@@ -62,8 +62,8 @@ func (sc seoController) Update(context *admin.Context) {
 	if err != nil {
 		settingContext.AddError(err)
 	}
-	context.DB.Where("name = ?", name).First(result)
-	if context.DB.NewRecord(result) {
+	context.db.Where("name = ?", name).First(result)
+	if context.db.NewRecord(result) {
 		context.Request.Form["QorResource.Name"] = []string{name}
 		context.Request.Form["QorResource.Setting.Type"] = []string{name}
 	}

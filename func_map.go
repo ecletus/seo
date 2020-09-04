@@ -11,7 +11,7 @@ func seoSections(context *admin.Context, collection *Collection) []interface{} {
 	settings := []interface{}{}
 	for _, seo := range collection.registeredSEO {
 		s := collection.SettingResource.NewStruct(context.Site)
-		db := context.GetDB()
+		db := context.DB()
 		db.Where("name = ?", seo.Name).First(s)
 		if db.NewRecord(s) {
 			s.(QorSEOSettingInterface).SetName(seo.Name)
@@ -30,7 +30,7 @@ func seoSettingMetas(collection *Collection) []*admin.Section {
 
 func seoGlobalSetting(context *admin.Context, collection *Collection) interface{} {
 	s := collection.SettingResource.NewStruct(context.Site)
-	db := context.GetDB()
+	db := context.DB()
 	db.Where("is_global_seo = ? AND name = ?", true, collection.Name).First(s)
 	if db.NewRecord(s) {
 		s.(QorSEOSettingInterface).SetName(collection.Name)
@@ -72,7 +72,7 @@ func seoTagsByType(seo *SEO) (tags []string) {
 }
 
 func seoAppendDefaultValue(context *admin.Context, seo *SEO, resourceSeoValue interface{}) interface{} {
-	db := context.GetDB()
+	db := context.DB()
 	globalInteface := seo.collection.SettingResource.NewStruct(nil)
 	db.Where("name = ?", seo.Name).First(globalInteface)
 	globalSetting := globalInteface.(QorSEOSettingInterface)
